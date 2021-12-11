@@ -301,9 +301,9 @@
     <string name="qs_edit_title">Edit Icon</string>
     <string name="qs_edit_summary">Enable the tile edit icon in the footer</string>
 
-	    <!-- AEX logo -->
-    <string name="aex_logo_title">AEX logo</string>
-    <string name="aex_logo_summary">Let everyone know that you\'re using AEX when they see your screen</string>
+	    <!-- Project Arcana logo -->
+    <string name="arcana_logo_title">Project Arcana logo</string>
+    <string name="arcana_logo_summary">Let everyone know that you\'re using ProjectArcana when they see your screen</string>
 
     <!-- Statusbar net monitor -->
     <string name="traffic_title">Traffic Indicators</string>

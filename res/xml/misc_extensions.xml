@@ -22,8 +22,8 @@
 
 	 <SwitchPreference
              android:key="status_bar_logo"
-             android:title="@string/aex_logo_title"
-             android:summary="@string/aex_logo_summary"
+             android:title="@string/arcana_logo_title"
+             android:summary="@string/arcana_logo_summary"
              android:defaultValue="false" />
 
          <org.aospextended.support.preference.SystemSettingSwitchPreference
