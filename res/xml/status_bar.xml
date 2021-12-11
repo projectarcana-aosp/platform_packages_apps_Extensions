@@ -32,6 +32,13 @@
         android:title="@string/carrier_label_settings_title" />
 
     <org.aospextended.support.preference.CardviewPreference
+        android:key="show_combined_status_bar_signal_icons"
+        android:title="@string/combined_status_bar_signal_icons"
+        android:summary="@string/combined_status_bar_signal_icons_summary"
+        settings:controller="org.aospextended.extensions.fragments.CombinedSignalIconsPreferenceController"
+        android:defaultValue="false" />
+
+    <org.aospextended.support.preference.CardviewPreference
         android:key="status_bar_clock"
         android:fragment="org.aospextended.extensions.fragments.ClockDateSettings"
         android:icon="@drawable/ic_status_bar_clock"
