@@ -559,4 +559,10 @@
     <string name="artwork_media_background_enable_blur_title">Blur media media artwork background</string>
     <string name="artwork_media_background_blur_radius_title">Blur amount for media artwork</string>
     <string name="artwork_media_background_alpha_title">Transparency of media artwork</string>
+    
+    <string name="qsclockpicker_title">QsCLock Picker</string>
+    <string name="qsclockpicker_def">Default Aosp look</string>
+    <string name="qsclockpicker_img">ImgClock</string>
+    <string name="qsclockpicker_big">BigClock</string>
+    
 </resources>
