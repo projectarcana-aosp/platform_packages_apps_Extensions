@@ -569,4 +569,11 @@
     <string name="qsclockpicker_img">ImgClock</string>
     <string name="qsclockpicker_big">BigClock</string>
     
+    <!-- Notifications general category -->
+    <string name="notifications_general_category_title">General</string>
+
+    <!-- Notification count -->
+    <string name="status_bar_notif_count_title">Show notifications count</string>
+    <string name="status_bar_notif_count_summary">Display the number of pending notifications</string>
+
 </resources>
