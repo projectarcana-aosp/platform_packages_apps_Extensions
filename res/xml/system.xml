@@ -37,6 +37,13 @@
         android:icon="@drawable/ic_customisation"
         android:title="@string/customisation_title" />
 
+    <!-- Gaming mode -->
+    <org.aospextended.support.preference.CardviewPreference
+        android:key="gaming_category"
+        android:title="@string/gaming_title"
+        android:fragment="com.android.settings.preferences.game.GamingModeSettings"
+        android:icon="@drawable/ic_settings_gaming"/>
+        
      <org.aospextended.support.preference.CardviewPreference
         android:key="general_tweaks"
         android:fragment="org.aospextended.extensions.fragments.GeneralTweaks"
