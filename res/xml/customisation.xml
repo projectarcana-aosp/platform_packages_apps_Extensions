@@ -17,6 +17,18 @@
     android:title="@string/customisation_title">
 
     <PreferenceCategory
+        android:key="themes_category"
+        android:title="Themes">
+        
+    <Preference
+        android:key="extra_theme_settings"
+        android:title="@string/extra_theme_settings_title"
+        android:summary="@string/extra_theme_settings_summary"
+        android:fragment="org.aospextended.extensions.fragments.ExtraThemes" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="monel_category"
         android:title="Monet">
 
