@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 AospExtended ROM Project
+ * Copyright (C) 2021 AospExtended ROM Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,10 +17,7 @@
 package org.aospextended.extensions.fragments;
 
 import static android.os.UserHandle.USER_SYSTEM;
-import static android.os.UserHandle.USER_CURRENT;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import android.app.ActivityManagerNative;
 import android.app.UiModeManager;
 import android.content.Context;
@@ -67,32 +64,31 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class Customisation extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
+public class MonetEngine extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
 
-    private static final String TAG = "Customisation";
+    private String MONET_ENGINE_COLOR_OVERRIDE = "monet_engine_color_override";
 
-    private static final String CUSTOM_CLOCK_FACE = Settings.Secure.LOCK_SCREEN_CUSTOM_CLOCK_FACE;
-    private static final String DEFAULT_CLOCK = "com.android.keyguard.clock.DefaultClockController";
-    
     private Context mContext;
-    private ListPreference mLockClockStyles;
+
+    private ColorPickerPreference mMonetColor;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addPreferencesFromResource(R.xml.customisation);
+        addPreferencesFromResource(R.xml.monet_settings);
 
         mContext = getActivity();
 
         final ContentResolver resolver = getActivity().getContentResolver();
         final PreferenceScreen screen = getPreferenceScreen();
-        
-        mLockClockStyles = (ListPreference) findPreference(CUSTOM_CLOCK_FACE);
-        String mLockClockStylesValue = getLockScreenCustomClockFace();
-        mLockClockStyles.setValue(mLockClockStylesValue);
-        mLockClockStyles.setSummary(mLockClockStyles.getEntry());
-        mLockClockStyles.setOnPreferenceChangeListener(this);
+
+        mMonetColor = (ColorPickerPreference) screen.findPreference(MONET_ENGINE_COLOR_OVERRIDE);
+        int intColor = Settings.Secure.getInt(resolver, MONET_ENGINE_COLOR_OVERRIDE, Color.WHITE);
+        String hexColor = String.format("#%08x", (0xffffff & intColor));
+        mMonetColor.setNewPreviewColor(intColor);
+        mMonetColor.setSummary(hexColor);
+        mMonetColor.setOnPreferenceChangeListener(this);
     }
 
     @Override
@@ -108,37 +104,15 @@ public class Customisation extends SettingsPreferenceFragment implements OnPrefe
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         ContentResolver resolver = getActivity().getContentResolver();
-        if (preference == mLockClockStyles) {
-            setLockScreenCustomClockFace((String) newValue);
-            int index = mLockClockStyles.findIndexOfValue((String) newValue);
-            mLockClockStyles.setSummary(mLockClockStyles.getEntries()[index]);
+        if (preference == mMonetColor) {
+            String hex = ColorPickerPreference.convertToARGB(Integer
+                .parseInt(String.valueOf(newValue)));
+            preference.setSummary(hex);
+            int intHex = ColorPickerPreference.convertToColorInt(hex);
+            Settings.Secure.putInt(resolver,
+                MONET_ENGINE_COLOR_OVERRIDE, intHex);
             return true;
         }
         return false;
-    }
-    
-        private String getLockScreenCustomClockFace() {
-        mContext = getActivity();
-        String value = Settings.Secure.getStringForUser(mContext.getContentResolver(),
-                CUSTOM_CLOCK_FACE, USER_CURRENT);
-
-        if (value == null || value.isEmpty()) value = DEFAULT_CLOCK;
-
-        try {
-            JSONObject json = new JSONObject(value);
-            return json.getString("clock");
-        } catch (JSONException ex) {
-        }
-        return value;
-    }
-
-    private void setLockScreenCustomClockFace(String value) {
-        try {
-            JSONObject json = new JSONObject();
-            json.put("clock", value);
-            Settings.Secure.putStringForUser(mContext.getContentResolver(), CUSTOM_CLOCK_FACE,
-                    json.toString(), USER_CURRENT);
-        } catch (JSONException ex) {
-        }
     }
 }
