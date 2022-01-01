@@ -46,11 +46,15 @@ import com.android.settings.SettingsPreferenceFragment;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 
 import com.android.internal.util.aospextended.AEXUtils;
+import org.aospextended.support.preference.SystemSettingMasterSwitchPreference;
 
 public class Notifications extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
 
     private static final String INCALL_VIB_OPTIONS = "incall_vib_options";
+    private static final String KEY_EDGE_LIGHTNING = "pulse_ambient_light";
 
+    private SystemSettingMasterSwitchPreference mEdgeLightning;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +68,13 @@ public class Notifications extends SettingsPreferenceFragment implements OnPrefe
         if (!AEXUtils.isVoiceCapable(getActivity())) {
                 prefSet.removePreference(incallVibCategory);
         }
+        
+        mEdgeLightning = (SystemSettingMasterSwitchPreference)
+                findPreference(KEY_EDGE_LIGHTNING);
+        boolean enabled = Settings.System.getIntForUser(resolver,
+                KEY_EDGE_LIGHTNING, 0, UserHandle.USER_CURRENT) == 1;
+        mEdgeLightning.setChecked(enabled);
+        mEdgeLightning.setOnPreferenceChangeListener(this);
     }
 
     @Override
@@ -77,7 +88,14 @@ public class Notifications extends SettingsPreferenceFragment implements OnPrefe
     }
 
     @Override
-    public boolean onPreferenceChange(Preference preference, Object objValue) {
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+     ContentResolver resolver = getActivity().getContentResolver();
+     if (preference == mEdgeLightning) {
+            boolean value = (Boolean) newValue;
+            Settings.System.putIntForUser(resolver, KEY_EDGE_LIGHTNING,
+                    value ? 1 : 0, UserHandle.USER_CURRENT);
+            return true;
+       }
         return false;
     }
 }
