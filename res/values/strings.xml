@@ -642,5 +642,9 @@
     <!-- Ambient Ticker -->
     <string name="pulse_on_new_tracks_title">Music ticker</string>
     <string name="pulse_on_new_tracks_summary">Show music ticker on Ambient Display during track change</string>
+   
+    <!-- Lockscreen Clock -->
+    <string name="force_lockscreen_small">Force small LS clock</string>
+    <string name="force_lockscreen_small_summary">Use small clock for Lockscreen clock</string>
 
 </resources>
