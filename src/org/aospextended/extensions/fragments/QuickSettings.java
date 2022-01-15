@@ -22,6 +22,8 @@ import android.content.ContentResolver;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.database.ContentObserver;
+import android.net.Uri;
+import android.content.om.IOverlayManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.UserHandle;
@@ -44,6 +46,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.android.settings.R;
+import org.aospextended.support.preference.SystemSettingListPreference;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.settings.Utils;
@@ -54,14 +57,20 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
     private static final String PREF_TILE_ANIM_DURATION = "qs_tile_animation_duration";
     private static final String PREF_TILE_ANIM_INTERPOLATOR = "qs_tile_animation_interpolator";
     private static final String PREF_SMART_PULLDOWN = "smart_pulldown";
+    private static final String QS_CLOCK_PICKER = "qs_clock_picker";
 
     private ListPreference mTileAnimationStyle;
     private ListPreference mTileAnimationDuration;
     private ListPreference mTileAnimationInterpolator;
 
     private ListPreference mQuickPulldown;
+    private SystemSettingListPreference mQsClockPicker;
     private ListPreference mSmartPulldown;
 
+    private IOverlayManager mOverlayManager;
+    private IOverlayManager mOverlayService;
+    private Handler mHandler;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +80,11 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
         final ContentResolver resolver = getActivity().getContentResolver();
         final PreferenceScreen prefSet = getPreferenceScreen();
 
+        mOverlayManager = IOverlayManager.Stub.asInterface(
+                ServiceManager.getService(Context.OVERLAY_SERVICE));
+        mOverlayService = IOverlayManager.Stub
+                .asInterface(ServiceManager.getService(Context.OVERLAY_SERVICE));
+                
          // QS animation
         mTileAnimationStyle = (ListPreference) findPreference(PREF_TILE_ANIM_STYLE);
         int tileAnimationStyle = Settings.System.getIntForUser(resolver,
@@ -107,8 +121,54 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
                 Settings.System.QS_SMART_PULLDOWN, 0);
         mSmartPulldown.setValue(String.valueOf(smartPulldown));
         updateSmartPulldownSummary(smartPulldown);
+        
+        mQsClockPicker = (SystemSettingListPreference) findPreference(QS_CLOCK_PICKER);
+        boolean isAospClock = Settings.System.getIntForUser(resolver,
+                KEY_EDGE_LIGHTNING, 0, UserHandle.USER_CURRENT) == 5;
+        mQsClockPicker.setOnPreferenceChangeListener(this);
+        mCustomSettingsObserver.observe();
     }
 
+    private CustomSettingsObserver mCustomSettingsObserver = new CustomSettingsObserver(mHandler);
+    private class CustomSettingsObserver extends ContentObserver {
+
+        CustomSettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            Context mContext = getContext();
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_CLOCK_PICKER ),
+                    false, this, UserHandle.USER_ALL);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            if (uri.equals(Settings.System.getUriFor(Settings.System.QS_CLOCK_PICKER ))) {
+                updateQsClock();
+            }
+        }
+    }
+
+    private void updateQsClock() {
+        ContentResolver resolver = getActivity().getContentResolver();
+
+        boolean AospClock = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.QS_CLOCK_PICKER , 0, UserHandle.USER_CURRENT) == 5;
+        boolean ColorOsClock = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.QS_CLOCK_PICKER , 0, UserHandle.USER_CURRENT) == 6;
+
+        if (AospClock) {
+            updateQsClockPicker(mOverlayManager, "com.spark.qsclockoverlays.aosp");
+        } else if (ColorOsClock) {
+            updateQsClockPicker(mOverlayManager, "com.spark.qsclockoverlays.coloros");
+        } else {
+            setDefaultClock(mOverlayManager);
+        }
+    }
+    
      @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         ContentResolver resolver = getActivity().getContentResolver();
@@ -145,9 +205,56 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
             Settings.System.putInt(resolver, Settings.System.QS_SMART_PULLDOWN, smartPulldown);
             updateSmartPulldownSummary(smartPulldown);
             return true;
+        } else if (preference == mQsClockPicker) {
+            int SelectedClock = Integer.valueOf((String) newValue);
+            Settings.System.putInt(resolver, Settings.System.QS_CLOCK_PICKER, SelectedClock);
+            mCustomSettingsObserver.observe();
+            return true;
         }
         return false;
     }
+
+
+    public static void setDefaultClock(IOverlayManager overlayManager) {
+        for (int i = 0; i < CLOCKS.length; i++) {
+            String clocks = CLOCKS[i];
+            try {
+                overlayManager.setEnabled(clocks, false, USER_SYSTEM);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void updateQsClockPicker(IOverlayManager overlayManager, String overlayName) {
+        try {
+            for (int i = 0; i < CLOCKS.length; i++) {
+                String clocks = CLOCKS[i];
+                try {
+                    overlayManager.setEnabled(clocks, false, USER_SYSTEM);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+            overlayManager.setEnabled(overlayName, true, USER_SYSTEM);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void handleOverlays(String packagename, Boolean state, IOverlayManager mOverlayManager) {
+        try {
+            mOverlayManager.setEnabled(packagename,
+                    state, USER_SYSTEM);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static final String[] CLOCKS = {
+        "com.spark.qsclockoverlays.aosp",
+        "com.spark.qsclockoverlays.coloros",
+    };
 
      private void updateTileAnimationStyleSummary(int tileAnimationStyle) {
         String prefix = (String) mTileAnimationStyle.getEntries()[mTileAnimationStyle.findIndexOfValue(String
