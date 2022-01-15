@@ -26,6 +26,11 @@
         android:summary="@string/extra_theme_settings_summary"
         android:fragment="org.aospextended.extensions.fragments.ExtraThemes" />
 
+   <org.aospextended.support.preference.SystemSettingSwitchPreference
+        android:key="use_wp_zoom"
+        android:title="@string/use_wp_zoom_title"
+        android:summary="@string/use_wp_zoom_summary"
+        android:defaultValue="false" />
     </PreferenceCategory>
 
     <PreferenceCategory
