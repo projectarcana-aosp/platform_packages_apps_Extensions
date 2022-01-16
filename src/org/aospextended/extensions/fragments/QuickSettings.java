@@ -16,6 +16,8 @@
 
 package org.aospextended.extensions.fragments;
 
+import static android.os.UserHandle.USER_CURRENT;
+import static android.os.UserHandle.USER_SYSTEM;
 import android.app.ActivityManagerNative;
 import android.content.Context;
 import android.content.ContentResolver;
@@ -124,7 +126,7 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
         
         mQsClockPicker = (SystemSettingListPreference) findPreference(QS_CLOCK_PICKER);
         boolean isAospClock = Settings.System.getIntForUser(resolver,
-                KEY_EDGE_LIGHTNING, 0, UserHandle.USER_CURRENT) == 5;
+                QS_CLOCK_PICKER, 0, UserHandle.USER_CURRENT) == 4;
         mQsClockPicker.setOnPreferenceChangeListener(this);
         mCustomSettingsObserver.observe();
     }
@@ -156,9 +158,9 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
         ContentResolver resolver = getActivity().getContentResolver();
 
         boolean AospClock = Settings.System.getIntForUser(getContext().getContentResolver(),
-                Settings.System.QS_CLOCK_PICKER , 0, UserHandle.USER_CURRENT) == 5;
+                Settings.System.QS_CLOCK_PICKER , 0, UserHandle.USER_CURRENT) == 4;
         boolean ColorOsClock = Settings.System.getIntForUser(getContext().getContentResolver(),
-                Settings.System.QS_CLOCK_PICKER , 0, UserHandle.USER_CURRENT) == 6;
+                Settings.System.QS_CLOCK_PICKER , 0, UserHandle.USER_CURRENT) == 5;
 
         if (AospClock) {
             updateQsClockPicker(mOverlayManager, "com.spark.qsclockoverlays.aosp");

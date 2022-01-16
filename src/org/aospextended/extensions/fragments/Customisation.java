@@ -70,7 +70,6 @@ import java.util.List;
 public class Customisation extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
 
     private static final String TAG = "Customisation";
-    private Context mContext;
 
     private String MONET_ENGINE_COLOR_OVERRIDE = "monet_engine_color_override";
     private static final String CUSTOM_CLOCK_FACE = Settings.Secure.LOCK_SCREEN_CUSTOM_CLOCK_FACE;
