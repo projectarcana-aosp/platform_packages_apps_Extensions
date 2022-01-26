@@ -44,7 +44,7 @@
     <string name="system_category">System</string>
     <string name="lockscreen_category">Lockscreen</string>
     <string name="navigation_and_recents_category">Navigation</string>
-    <string name="build_tweaks_summary_title">Whatever they brought, it won\'t be enough.</string>
+    <string name="build_tweaks_summary_title">ROM customizations • Features</string>
     <string name="listview">ListView</string>
     <string name="light_category">Lights</string>
 
@@ -83,7 +83,7 @@
     <string name="statusbar_items_category">Statusbar Items</string>
 
     <!-- Customisation -->
-    <string name="customisation_title">Customisation</string>
+    <string name="customisation_title">Customization</string>
 
     <!-- Battery -->
     <string name="battery_title">Battery</string>
@@ -584,9 +584,9 @@
      <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the system wide icon pack. -->
     <string name="theme_customization_icon_pack_title">Icon pack</string>
     
-    <string name="extra_theme_settings_title">Grimoire</string>
-    <string name="extra_theme_settings_summary">Drawn from deep within.</string>
-    <string name="custom_font_preference_title">Custom font (Select custom font first from Headline / Body font)</string>
+    <string name="extra_theme_settings_title">Extra Customizations</string>
+    <string name="extra_theme_settings_summary">Customize user interface.</string>
+    <string name="custom_font_preference_title">Custom font (Select custom font option first from Headline / Body font)</string>
     <string name="custom_font_preference_footer_message">Reboot after selecting a CUSTOM font to take effect.</string>
     <string name="cannot_resolve_activity">Unable to find a suitable activity to perform this action!</string>
     <string name="invalid_font_file">Font file does not have valid postscript table</string>
