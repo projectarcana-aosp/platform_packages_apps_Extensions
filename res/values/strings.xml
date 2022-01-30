@@ -675,4 +675,7 @@
     <string name="combined_status_bar_signal_icons">Combined signal icons</string>
     <string name="combined_status_bar_signal_icons_summary">Enable combined signal icons in status bar.\nRequires a SystemUI restart</string>
 
+    <!-- Fingerprint Ripple Effect -->
+    <string name="enable_fingerprint_ripple_effect_title">Ripple effect</string>
+    <string name="enable_fingerprint_ripple_effect_summary">Show ripple effect on unlock with fingerprint</string>
 </resources>
