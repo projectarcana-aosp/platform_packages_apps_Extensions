@@ -26,6 +26,12 @@
              android:summary="@string/arcana_logo_summary"
              android:defaultValue="false" />
 
+         <org.aospextended.support.preference.SecureSettingSwitchPreference
+             android:key="show_combined_status_bar_signal_icons"
+             android:title="@string/combined_status_bar_signal_icons"
+             android:summary="@string/combined_status_bar_signal_icons_summary"
+             android:defaultValue="false"/>
+             
          <org.aospextended.support.preference.SystemSettingSwitchPreference
             android:key="statusbar_icons_style"
             android:title="@string/statusbar_icons_style"
