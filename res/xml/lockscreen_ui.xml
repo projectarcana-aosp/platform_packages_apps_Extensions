@@ -50,13 +50,7 @@
         android:title="@string/lockscreen_battery_info_title"
         android:summary="@string/lockscreen_battery_info_summary"
         android:defaultValue="true" />
-        
-        <org.aospextended.support.preference.SystemSettingSwitchPreference
-            android:key="lockscreen_small_clock"
-            android:title="@string/force_lockscreen_small"
-            android:summary="@string/force_lockscreen_small_summary"
-            android:defaultValue="true" />
-            
+                    
     <org.aospextended.support.preference.SystemSettingListPreference
         android:key="screen_off_animation"
         android:title="@string/screen_off_animation_title"
