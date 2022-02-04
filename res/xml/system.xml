@@ -19,6 +19,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
+    <!-- Gaming mode -->
+    <org.aospextended.support.preference.CardviewPreference
+        android:key="gaming_category"
+        android:title="@string/gaming_title"
+        android:fragment="com.android.settings.preferences.game.GamingModeSettings"
+        android:icon="@drawable/ic_settings_gaming"/>
+        
      <org.aospextended.support.preference.CardviewPreference
         android:key="battery"
         android:fragment="org.aospextended.extensions.fragments.Battery"
@@ -36,13 +43,6 @@
         android:fragment="org.aospextended.extensions.fragments.Customisation"
         android:icon="@drawable/ic_customisation"
         android:title="@string/customisation_title" />
-
-    <!-- Gaming mode -->
-    <org.aospextended.support.preference.CardviewPreference
-        android:key="gaming_category"
-        android:title="@string/gaming_title"
-        android:fragment="com.android.settings.preferences.game.GamingModeSettings"
-        android:icon="@drawable/ic_settings_gaming"/>
         
      <org.aospextended.support.preference.CardviewPreference
         android:key="general_tweaks"
