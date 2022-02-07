@@ -42,6 +42,7 @@ import androidx.preference.ListPreference;
 import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceScreen;
 import androidx.preference.Preference.OnPreferenceChangeListener;
+import android.content.SharedPreferences;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
@@ -62,17 +63,37 @@ import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.settings.Utils;
 
 import org.aospextended.support.colorpicker.ColorPickerPreference;
+import org.aospextended.support.preference.CustomSeekBarPreference;
+import org.aospextended.support.preference.SystemSettingSeekBarPreference;
+import org.aospextended.support.preference.SecureSettingSwitchPreference;
+
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import com.android.settings.search.BaseSearchIndexProvider;
+import com.android.settingslib.search.SearchIndexable;
+import android.provider.SearchIndexableResource;
 
+@SearchIndexable(forTarget = SearchIndexable.ALL & ~SearchIndexable.ARC)
 public class Customisation extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
 
     private static final String TAG = "Customisation";
 
     private static final String CUSTOM_CLOCK_FACE = Settings.Secure.LOCK_SCREEN_CUSTOM_CLOCK_FACE;
     private static final String DEFAULT_CLOCK = "com.android.keyguard.clock.DefaultClockController";
+
+    private static final String STATUSBAR_LEFT_PADDING = "statusbar_left_padding";
+    private static final String STATUSBAR_RIGHT_PADDING = "statusbar_right_padding";
+    private static final String SYSUI_ROUNDED_SIZE = "sysui_rounded_size";
+    private static final String SYSUI_ROUNDED_CONTENT_PADDING = "sysui_rounded_content_padding";
+    private static final String SYSUI_ROUNDED_FWVALS = "sysui_rounded_fwvals";
+
+    private SystemSettingSeekBarPreference mSbLeftPadding;
+    private SystemSettingSeekBarPreference mSbRightPadding;
+    private CustomSeekBarPreference mCornerRadius;
+    private CustomSeekBarPreference mContentPadding;
+    private SecureSettingSwitchPreference mRoundedFwvals;
     
     private Context mContext;
     private ListPreference mLockClockStyles;
@@ -87,6 +108,41 @@ public class Customisation extends SettingsPreferenceFragment implements OnPrefe
 
         final ContentResolver resolver = getActivity().getContentResolver();
         final PreferenceScreen screen = getPreferenceScreen();
+        final PreferenceScreen prefScreen = getPreferenceScreen();
+        
+        Resources res = null;
+        Context ctx = getContext();
+        float density = Resources.getSystem().getDisplayMetrics().density;
+
+        try {
+            res = ctx.getPackageManager().getResourcesForApplication("com.android.systemui");
+        } catch (NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        mSbLeftPadding = (SystemSettingSeekBarPreference) findPreference(STATUSBAR_LEFT_PADDING);
+        int sbLeftPadding = Settings.System.getIntForUser(ctx.getContentResolver(),
+                Settings.System.LEFT_PADDING, ((int) (res.getIdentifier("com.android.systemui:dimen/status_bar_padding_start", null, null) / density)), UserHandle.USER_CURRENT);
+        mSbLeftPadding.setValue(sbLeftPadding);
+        mSbLeftPadding.setOnPreferenceChangeListener(this);
+
+        mSbRightPadding = (SystemSettingSeekBarPreference) findPreference(STATUSBAR_RIGHT_PADDING);
+        int sbRightPadding = Settings.System.getIntForUser(ctx.getContentResolver(),
+                Settings.System.RIGHT_PADDING, ((int) (res.getIdentifier("com.android.systemui:dimen/status_bar_padding_end", null, null) / density)), UserHandle.USER_CURRENT);
+        mSbRightPadding.setValue(sbRightPadding);
+        mSbRightPadding.setOnPreferenceChangeListener(this);
+        
+        // Rounded Corner Radius
+        mCornerRadius = (CustomSeekBarPreference) findPreference(SYSUI_ROUNDED_SIZE);
+        int resourceIdRadius = (int) ctx.getResources().getDimension(com.android.internal.R.dimen.rounded_corner_radius);
+        int cornerRadius = Settings.Secure.getIntForUser(ctx.getContentResolver(), Settings.Secure.SYSUI_ROUNDED_SIZE,
+                ((int) (resourceIdRadius / density)), UserHandle.USER_CURRENT);
+        mCornerRadius.setValue(cornerRadius);
+        mCornerRadius.setOnPreferenceChangeListener(this);
+
+        // Rounded use Framework Values
+        mRoundedFwvals = (SecureSettingSwitchPreference) findPreference(SYSUI_ROUNDED_FWVALS);
+        mRoundedFwvals.setOnPreferenceChangeListener(this);
         
         mLockClockStyles = (ListPreference) findPreference(CUSTOM_CLOCK_FACE);
         String mLockClockStylesValue = getLockScreenCustomClockFace();
@@ -100,6 +156,7 @@ public class Customisation extends SettingsPreferenceFragment implements OnPrefe
         return MetricsEvent.EXTENSIONS;
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
@@ -108,7 +165,36 @@ public class Customisation extends SettingsPreferenceFragment implements OnPrefe
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         ContentResolver resolver = getActivity().getContentResolver();
-        if (preference == mLockClockStyles) {
+        Resources res = null;
+        Context ctx = getContext();
+        float density = Resources.getSystem().getDisplayMetrics().density;
+
+        try {
+            res = ctx.getPackageManager().getResourcesForApplication("com.android.systemui");
+        } catch (NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        if (preference == mSbLeftPadding) {
+            int leftValue = (Integer) newValue;
+            int sbLeft = ((int) (leftValue / density));
+            Settings.System.putIntForUser(getContext().getContentResolver(),
+                    Settings.System.LEFT_PADDING, sbLeft, UserHandle.USER_CURRENT);
+            return true;
+        } else if (preference == mSbRightPadding) {
+            int rightValue = (Integer) newValue;
+            int sbRight = ((int) (rightValue / density));
+            Settings.System.putIntForUser(getContext().getContentResolver(),
+                    Settings.System.RIGHT_PADDING, sbRight, UserHandle.USER_CURRENT);
+            return true;
+        } else if (preference == mCornerRadius) {
+            Settings.Secure.putIntForUser(getContext().getContentResolver(), Settings.Secure.SYSUI_ROUNDED_SIZE,
+                    (int) newValue, UserHandle.USER_CURRENT);
+            return true;
+        } else if (preference == mRoundedFwvals) {
+            restoreCorners();
+            return true;
+        } else if (preference == mLockClockStyles) {
             setLockScreenCustomClockFace((String) newValue);
             int index = mLockClockStyles.findIndexOfValue((String) newValue);
             mLockClockStyles.setSummary(mLockClockStyles.getEntries()[index]);
@@ -141,4 +227,40 @@ public class Customisation extends SettingsPreferenceFragment implements OnPrefe
         } catch (JSONException ex) {
         }
     }
+
+    private void restoreCorners() {
+        Resources res = null;
+        float density = Resources.getSystem().getDisplayMetrics().density;
+        Context ctx = getContext();
+
+        try {
+            res = ctx.getPackageManager().getResourcesForApplication("com.android.systemui");
+        } catch (NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        int resourceIdRadius = (int) ctx.getResources().getDimension(com.android.internal.R.dimen.rounded_corner_radius);
+        mCornerRadius.setValue((int) (resourceIdRadius / density));
+    }
+
+    public static final SearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
+            new BaseSearchIndexProvider() {
+
+                @Override
+                public List<SearchIndexableResource> getXmlResourcesToIndex(Context context,
+                        boolean enabled) {
+                    ArrayList<SearchIndexableResource> result =
+                            new ArrayList<SearchIndexableResource>();
+                    SearchIndexableResource sir = new SearchIndexableResource(context);
+                    sir.xmlResId = R.xml.customisation;
+                    result.add(sir);
+                    return result;
+                }
+
+          @Override
+               public List<String> getNonIndexableKeys(Context  context) {
+                    List<String> keys = super.getNonIndexableKeys(context);
+                    return keys;
+                }
+    };
 }
