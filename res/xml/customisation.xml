@@ -72,7 +72,7 @@
             android:max="30"
             android:min="-5"
             settings:units="dp"
-            android:defaultValue="8"/>
+            android:defaultValue="3"/>
 
      <org.aospextended.support.preference.SystemSettingSeekBarPreference
             android:key="statusbar_right_padding"
@@ -80,7 +80,7 @@
             android:max="30"
             android:min="-5"
             settings:units="dp"
-            android:defaultValue="8"/>
+            android:defaultValue="0"/>
 
     </PreferenceCategory>
     
