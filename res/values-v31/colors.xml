@@ -23,5 +23,5 @@
     <color name="default_inactive_shape_color">@*android:color/system_neutral1_700</color>
     <color name="default_inactive_color">@*android:color/system_neutral1_300</color>
     <color name="default_shape_inactive_color">@*android:color/system_neutral1_700</color>
-    <color name="tab_bg">@*android:color/surface_highlight_light</color>
+    <color name="tab_bg">@*android:color/system_neutral1_0</color>
 </resources>
