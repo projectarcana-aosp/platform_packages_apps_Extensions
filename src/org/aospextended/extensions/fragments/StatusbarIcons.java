@@ -81,8 +81,6 @@ public class StatusbarIcons extends SettingsPreferenceFragment {
     {
         overlayMap.put("com.android.settings", "android.theme.customization.icon_pack.settings");
         overlayMap.put("com.android.systemui", "android.theme.customization.icon_pack.systemui");
-        overlayMap.put("com.android.launcher3", "android.theme.customization.icon_pack.launcher");
-        overlayMap.put("com.android.wallpaper", "android.theme.customization.icon_pack.themepicker");
     }
 
     @Override
