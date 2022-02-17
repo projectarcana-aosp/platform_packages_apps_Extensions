@@ -31,6 +31,7 @@ import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceScreen;
 import androidx.preference.Preference.OnPreferenceChangeListener;
 import androidx.preference.SwitchPreference;
+import android.provider.DeviceConfig;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.WindowManagerGlobal;
@@ -55,8 +56,11 @@ public class MiscExtensions extends SettingsPreferenceFragment implements OnPref
     private static final String COMBINED_STATUSBAR_ICONS = "show_combined_status_bar_signal_icons";
     private static final String CONFIG_RESOURCE_NAME = "flag_combined_status_bar_signal_icons";
     private static final String SYSTEMUI_PACKAGE = "com.android.systemui";
+    private static final String LOCATION_DEVICE_CONFIG = "location_indicators_enabled";
+    private static final String LOCATION_INDICATOR = "enable_location_privacy_indicator";
     
     private SwitchPreference mShowAexLogo;
+    private SecureSettingSwitchPreference mLocationIndicator;
     SecureSettingSwitchPreference mCombinedIcons;
     
     @Override
@@ -91,6 +95,13 @@ public class MiscExtensions extends SettingsPreferenceFragment implements OnPref
         }
         mCombinedIcons.setChecked(Settings.Secure.getInt(getActivity().getContentResolver(), COMBINED_STATUSBAR_ICONS, def ? 1 : 0) == 1);
         mCombinedIcons.setOnPreferenceChangeListener(this);
+        
+        mLocationIndicator = (SecureSettingSwitchPreference) findPreference(LOCATION_INDICATOR);
+        boolean locIndicator = DeviceConfig.getBoolean(DeviceConfig.NAMESPACE_PRIVACY,
+                LOCATION_DEVICE_CONFIG, false);
+        mLocationIndicator.setDefaultValue(locIndicator);
+        mLocationIndicator.setChecked(Settings.Secure.getInt(resolver,
+                LOCATION_INDICATOR, locIndicator ? 1 : 0) == 1);
     }
 
     @Override
