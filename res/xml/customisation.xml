@@ -17,15 +17,55 @@
     android:title="@string/customisation_title">
 
     <PreferenceCategory
-        android:key="themes_category"
-        android:title="Themes">
-        
+        android:key="monet_category"
+        android:title="@string/monet_category">
+
+        <Preference
+            android:key="monet_engine"
+            android:title="@string/monet_engine_title"
+            android:summary="@string/monet_engine_summary"
+            android:fragment="org.aospextended.extensions.fragments.MonetEngine"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="theme_customization_category"
+        android:title="@string/theme_customization_category">
 
    <org.aospextended.support.preference.SystemSettingSwitchPreference
         android:key="use_wp_zoom"
         android:title="@string/use_wp_zoom_title"
         android:summary="@string/use_wp_zoom_summary"
         android:defaultValue="false" />
+                
+        <Preference
+            android:key="android.theme.customization.fonts"
+            android:title="@string/theme_customization_font_title"
+            android:summary="@string/theme_customization_font_summary"
+            android:fragment="org.aospextended.extensions.fragments.FontsPicker"/>
+
+        <Preference
+            android:key="android.theme.customization.icon_pack"
+            android:title="@string/theme_customization_icon_pack_title"
+            android:summary="@string/theme_customization_icon_pack_summary"
+            android:fragment="org.aospextended.extensions.fragments.StatusbarIcons"/>
+
+        <Preference
+            android:key="android.theme.customization.signal_icon"
+            android:title="@string/theme_customization_signal_icon_title"
+            android:summary="@string/theme_customization_signal_icon_summary"
+            android:fragment="org.aospextended.extensions.fragments.SignalIcons"/>
+
+        <Preference
+            android:key="android.theme.customization.wifi_icon"
+            android:title="@string/theme_customization_wifi_icon_title"
+            android:summary="@string/theme_customization_wifi_icon_summary"
+            android:fragment="org.aospextended.extensions.fragments.WifiIcons"/>
+
+        <Preference
+            android:key="android.theme.customization.adaptive_icon_shape"
+            android:title="@string/theme_customization_icon_shape_title"
+            android:summary="@string/theme_customization_icon_shape_summary"
+            android:fragment="org.aospextended.extensions.fragments.IconShapes"/>
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -82,52 +122,6 @@
             settings:units="dp"
             android:defaultValue="0"/>
 
-    </PreferenceCategory>
-    
-    <PreferenceCategory
-        android:key="monet_category"
-        android:title="@string/monet_category">
-
-        <Preference
-            android:key="monet_engine"
-            android:title="@string/monet_engine_title"
-            android:summary="@string/monet_engine_summary"
-            android:fragment="org.aospextended.extensions.fragments.MonetEngine"/>
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:key="theme_customization_category"
-        android:title="@string/theme_customization_category">
-
-        <Preference
-            android:key="android.theme.customization.fonts"
-            android:title="@string/theme_customization_font_title"
-            android:summary="@string/theme_customization_font_summary"
-            android:fragment="org.aospextended.extensions.fragments.FontsPicker"/>
-
-        <Preference
-            android:key="android.theme.customization.icon_pack"
-            android:title="@string/theme_customization_icon_pack_title"
-            android:summary="@string/theme_customization_icon_pack_summary"
-            android:fragment="org.aospextended.extensions.fragments.StatusbarIcons"/>
-
-        <Preference
-            android:key="android.theme.customization.signal_icon"
-            android:title="@string/theme_customization_signal_icon_title"
-            android:summary="@string/theme_customization_signal_icon_summary"
-            android:fragment="org.aospextended.extensions.fragments.SignalIcons"/>
-
-        <Preference
-            android:key="android.theme.customization.wifi_icon"
-            android:title="@string/theme_customization_wifi_icon_title"
-            android:summary="@string/theme_customization_wifi_icon_summary"
-            android:fragment="org.aospextended.extensions.fragments.WifiIcons"/>
-
-        <Preference
-            android:key="android.theme.customization.adaptive_icon_shape"
-            android:title="@string/theme_customization_icon_shape_title"
-            android:summary="@string/theme_customization_icon_shape_summary"
-            android:fragment="org.aospextended.extensions.fragments.IconShapes"/>
     </PreferenceCategory>
 
     <PreferenceCategory
