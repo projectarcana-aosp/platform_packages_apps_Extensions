@@ -710,4 +710,8 @@
     <string name="camera_privacy_indicator_title">Camera/Mic access indicator</string>
     <string name="camera_privacy_indicator_summary_on">Show camera/mic in the privacy chip</string>
     <string name="camera_privacy_indicator_summary_off">Show camera/mic in status bar icons</string>
+    
+    <string name="smart_space_title">SmartSpace</string>
+    <string name="smart_space_summary">Display conditional info such as weather and events on lockscreen\nRequires a SystemUI restart</string>
+
 </resources>
