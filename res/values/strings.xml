@@ -714,4 +714,6 @@
     <string name="smart_space_title">SmartSpace</string>
     <string name="smart_space_summary">Display conditional info such as weather and events on lockscreen\nRequires a SystemUI restart</string>
 
+    <string name="search">Search</string>
+    <string name="search_apps">Search apps</string>
 </resources>
