@@ -718,4 +718,6 @@
 
     <string name="search">Search</string>
     <string name="search_apps">Search apps</string>
+    
+    <string name="custom_illustration_description">Customize your device appearance, change fonts, icon packs, monet colors and many more.</string>
 </resources>

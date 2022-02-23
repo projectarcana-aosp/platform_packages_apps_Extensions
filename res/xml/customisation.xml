@@ -14,8 +14,17 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/customisation_title">
 
+        <com.android.settingslib.widget.TopIntroPreference
+            android:key="custom_illustration_desc"
+            android:title="@string/custom_illustration_description"/>
+            
+        <com.android.settingslib.widget.IllustrationPreference
+            android:key="custom_illustration"
+            app:lottie_rawRes="@raw/customization"/>
+            
     <PreferenceCategory
         android:key="monet_category"
         android:title="@string/monet_category">
