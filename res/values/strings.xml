@@ -44,7 +44,7 @@
     <string name="system_category">System</string>
     <string name="lockscreen_category">Lockscreen</string>
     <string name="navigation_and_recents_category">Navigation</string>
-    <string name="build_tweaks_summary_title">ROM customizations • Features</string>
+    <string name="build_tweaks_summary_title">Customizations, Features</string>
     <string name="listview">ListView</string>
     <string name="light_category">Lights</string>
     <string name="udfps_category">Udfps</string>
