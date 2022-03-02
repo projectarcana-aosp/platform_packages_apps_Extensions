@@ -113,14 +113,14 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:key="lockscreen_visualizer_options"
-        android:title="@string/lockscreen_visualizer_title" >
+        android:key="pulse_category"
+        android:title="@string/pulse_category">
 
         <Preference
-            android:key="lockscreen_visualizer"
-            android:fragment="org.aospextended.extensions.fragments.Visualizer"
-            android:title="@string/lockscreen_visualizer_enable"
-            android:summary="@string/lockscreen_visualizer_enable_summary" />
+            android:key="pulse_settings"
+            android:title="@string/pulse_settings"
+            android:summary="@string/pulse_settings_summary"
+            android:fragment="org.aospextended.extensions.fragments.PulseSettings" />
 
     </PreferenceCategory>
 
