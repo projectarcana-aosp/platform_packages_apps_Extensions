@@ -50,11 +50,29 @@
              android:summary="@string/show_fourg_icon_summary"
              android:defaultValue="false"/>
 
-         <org.aospextended.support.preference.SystemSettingSwitchPreference
-             android:key="volte_icon"
-             android:title="@string/volte_icon_title"
-             android:summary="@string/volte_icon_summary"
-             android:defaultValue="true"/>
+        <org.aospextended.support.preference.SystemSettingSwitchPreference
+            android:key="volte_vowifi_override"
+            android:title="@string/volte_vowifi_override_title"
+            android:summary="@string/volte_vowifi_override_summary"
+            android:defaultValue="true"/>
+            
+        <org.aospextended.support.preference.SystemSettingSeekBarPreference
+            android:key="volte_icon_style"
+            android:title="@string/volte_icon_title"
+            android:summary="@string/volte_icon_summary"
+            android:defaultValue="0"
+            android:max="9"
+            settings:min="0"
+            settings:units="" />
+
+        <org.aospextended.support.preference.SystemSettingSeekBarPreference
+            android:key="vowifi_icon_style"
+            android:title="@string/vowifi_icon_title"
+            android:summary="@string/vowifi_icon_summary"
+            android:defaultValue="0"
+            android:max="11"
+            settings:min="0"
+            settings:units="" />
 
          <org.aospextended.support.preference.SystemSettingSwitchPreference
              android:key="roaming_indicator_icon"

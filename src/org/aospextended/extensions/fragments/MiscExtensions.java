@@ -47,8 +47,11 @@ import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.settings.Utils;
+import com.android.internal.util.aospextended.AEXUtils;
 
 import org.aospextended.support.preference.SecureSettingSwitchPreference;
+import org.aospextended.support.preference.SystemSettingSwitchPreference;
+import org.aospextended.support.preference.SystemSettingSeekBarPreference;
 
 public class MiscExtensions extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
 
@@ -60,11 +63,17 @@ public class MiscExtensions extends SettingsPreferenceFragment implements OnPref
     private static final String CAMERA_DEVICE_CONFIG = "camera_indicators_enabled";
     private static final String LOCATION_INDICATOR = "enable_location_privacy_indicator";
     private static final String CAMERA_INDICATOR = "enable_camera_privacy_indicator";
+    private static final String KEY_VOLTE_ICON_STYLE = "volte_icon_style";
+    private static final String KEY_VOWIFI_ICON_STYLE = "vowifi_icon_style";
+    private static final String KEY_VOLTE_VOWIFI_OVERRIDE = "volte_vowifi_override";
 
     private SwitchPreference mShowAexLogo;
     private SecureSettingSwitchPreference mLocationIndicator;
     SecureSettingSwitchPreference mCombinedIcons;
     private SecureSettingSwitchPreference mCamIndicator;
+    private SystemSettingSeekBarPreference mVolteIconStyle;
+    private SystemSettingSeekBarPreference mVowifiIconStyle;
+    private SwitchPreference mOverride;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -112,6 +121,16 @@ public class MiscExtensions extends SettingsPreferenceFragment implements OnPref
         mCamIndicator.setDefaultValue(camIndicator);
         mCamIndicator.setChecked(Settings.Secure.getInt(resolver,
                 CAMERA_INDICATOR, camIndicator ? 1 : 0) == 1);
+                
+        mVolteIconStyle = (SystemSettingSeekBarPreference) findPreference(KEY_VOLTE_ICON_STYLE);
+        mVowifiIconStyle = (SystemSettingSeekBarPreference) findPreference(KEY_VOWIFI_ICON_STYLE);
+        mOverride = (SwitchPreference) findPreference(KEY_VOLTE_VOWIFI_OVERRIDE);
+        
+        if (!AEXUtils.isVoiceCapable(getActivity())) {
+            prefSet.removePreference(mVolteIconStyle);
+            prefSet.removePreference(mVowifiIconStyle);
+            prefSet.removePreference(mOverride);
+        }
     }
 
     @Override
