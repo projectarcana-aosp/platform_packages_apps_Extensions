@@ -818,6 +818,4 @@
     <string name="pulse_vertical_mirror_title">Vertical Mirror</string>
     <string name="pulse_vertical_mirror_summary">Create other pulse and flip vertically</string>
 
-    <!-- Volume panel on left switch -->
-    <string name="volume_panel_on_left_title">Show volume panel on left</string>
 </resources>
