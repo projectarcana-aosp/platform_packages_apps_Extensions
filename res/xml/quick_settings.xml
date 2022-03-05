@@ -81,6 +81,12 @@
            android:entryValues="@array/qsclock_type_values"
            android:summary="%s" />
         
+        <org.aospextended.support.preference.SystemSettingSwitchPreference
+            android:key="notification_material_dismiss"
+            android:title="@string/notification_material_dismiss_button_title"
+            android:summary="@string/notification_material_dismiss_button_summary"
+            android:defaultValue="false" />
+            
     </PreferenceCategory>
 
     <PreferenceCategory
