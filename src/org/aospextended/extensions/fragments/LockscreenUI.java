@@ -55,6 +55,7 @@ public class LockscreenUI extends SettingsPreferenceFragment implements OnPrefer
 
     private static final String FINGERPRINT_SUCCESS_VIB = "fingerprint_success_vib";
     private static final String FINGERPRINT_ERROR_VIB = "fingerprint_error_vib";
+    private static final String AOD_SCHEDULE_KEY = "always_on_display_schedule";
 
     private static final String UDFPS_HAPTIC_FEEDBACK = "udfps_haptic_feedback";
 
@@ -65,6 +66,14 @@ public class LockscreenUI extends SettingsPreferenceFragment implements OnPrefer
     private SystemSettingSwitchPreference mFingerprintErrorVib;
     private SystemSettingSwitchPreference mUdfpsHapticFeedback;
     private SystemSettingSwitchPreference mRippleEffect;
+    
+    static final int MODE_DISABLED = 0;
+    static final int MODE_NIGHT = 1;
+    static final int MODE_TIME = 2;
+    static final int MODE_MIXED_SUNSET = 3;
+    static final int MODE_MIXED_SUNRISE = 4;
+    
+    Preference mAODPref;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -110,8 +119,10 @@ public class LockscreenUI extends SettingsPreferenceFragment implements OnPrefer
         } else {
             prefSet.removePreference(fpCategory);
         }
+        mAODPref = findPreference(AOD_SCHEDULE_KEY);
+        updateAlwaysOnSummary();
     }
-
+    
     @Override
     public int getMetricsCategory() {
         return MetricsEvent.EXTENSIONS;
@@ -120,6 +131,24 @@ public class LockscreenUI extends SettingsPreferenceFragment implements OnPrefer
     @Override
     public void onResume() {
         super.onResume();
+        updateAlwaysOnSummary();
+    }
+
+    private void updateAlwaysOnSummary() {
+        if (mAODPref == null) return;
+        int mode = Settings.Secure.getIntForUser(getActivity().getContentResolver(),
+                Settings.Secure.DOZE_ALWAYS_ON_AUTO_MODE, 0, UserHandle.USER_CURRENT);
+        switch (mode) {
+            case 0:
+                mAODPref.setSummary(R.string.disabled);
+                break;
+            case 1:
+                mAODPref.setSummary(R.string.night_display_auto_mode_twilight);
+                break;
+            case 2:
+                mAODPref.setSummary(R.string.night_display_auto_mode_custom);
+                break;
+        }
     }
 
     @Override
