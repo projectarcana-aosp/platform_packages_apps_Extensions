@@ -33,14 +33,14 @@
             android:key="monet_engine"
             android:title="@string/monet_engine_title"
             android:summary="@string/monet_engine_summary"
-            android:fragment="org.aospextended.extensions.fragments.MonetEngine"/>
+            android:fragment="org.arcana.grimoire.fragments.MonetEngine"/>
     </PreferenceCategory>
 
     <PreferenceCategory
         android:key="theme_customization_category"
         android:title="@string/theme_customization_category">
 
-   <org.aospextended.support.preference.SystemSettingSwitchPreference
+   <org.arcana.support.preference.SystemSettingSwitchPreference
         android:key="use_wp_zoom"
         android:title="@string/use_wp_zoom_title"
         android:summary="@string/use_wp_zoom_summary"
@@ -50,31 +50,31 @@
             android:key="android.theme.customization.fonts"
             android:title="@string/theme_customization_font_title"
             android:summary="@string/theme_customization_font_summary"
-            android:fragment="org.aospextended.extensions.fragments.FontsPicker"/>
+            android:fragment="org.arcana.grimoire.fragments.FontsPicker"/>
 
         <Preference
             android:key="android.theme.customization.icon_pack"
             android:title="@string/theme_customization_icon_pack_title"
             android:summary="@string/theme_customization_icon_pack_summary"
-            android:fragment="org.aospextended.extensions.fragments.StatusbarIcons"/>
+            android:fragment="org.arcana.grimoire.fragments.StatusbarIcons"/>
 
         <Preference
             android:key="android.theme.customization.signal_icon"
             android:title="@string/theme_customization_signal_icon_title"
             android:summary="@string/theme_customization_signal_icon_summary"
-            android:fragment="org.aospextended.extensions.fragments.SignalIcons"/>
+            android:fragment="org.arcana.grimoire.fragments.SignalIcons"/>
 
         <Preference
             android:key="android.theme.customization.wifi_icon"
             android:title="@string/theme_customization_wifi_icon_title"
             android:summary="@string/theme_customization_wifi_icon_summary"
-            android:fragment="org.aospextended.extensions.fragments.WifiIcons"/>
+            android:fragment="org.arcana.grimoire.fragments.WifiIcons"/>
 
         <Preference
             android:key="android.theme.customization.adaptive_icon_shape"
             android:title="@string/theme_customization_icon_shape_title"
             android:summary="@string/theme_customization_icon_shape_summary"
-            android:fragment="org.aospextended.extensions.fragments.IconShapes"/>
+            android:fragment="org.arcana.grimoire.fragments.IconShapes"/>
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -87,7 +87,7 @@
             android:entries="@array/lock_screen_custom_clock_face_entries"
             android:entryValues="@array/lock_screen_custom_clock_face_values" />
             
-        <org.aospextended.support.preference.SystemSettingSwitchPreference
+        <org.arcana.support.preference.SystemSettingSwitchPreference
             android:key="lockscreen_small_clock"
             android:title="@string/force_lockscreen_small"
             android:summary="@string/force_lockscreen_small_summary"
@@ -99,14 +99,14 @@
         android:key="corners_category"
         android:title="@string/corners_category" >
 
-     <org.aospextended.support.preference.SecureSettingSwitchPreference
+     <org.arcana.support.preference.SecureSettingSwitchPreference
             android:key="sysui_rounded_fwvals"
             android:title="@string/corner_fwvals"
             android:summary="@string/corner_fwvals_summary"
             android:defaultValue="true"
             android:disableDependentsState="true" />
 
-     <org.aospextended.support.preference.CustomSeekBarPreference 
+     <org.arcana.support.preference.CustomSeekBarPreference 
             android:key="sysui_rounded_size"
             android:title="@string/corner_radius"
             android:max="60"
@@ -115,7 +115,7 @@
             android:persistent="false"
             android:dependency="sysui_rounded_fwvals" />
             
-     <org.aospextended.support.preference.SystemSettingSeekBarPreference
+     <org.arcana.support.preference.SystemSettingSeekBarPreference
             android:key="statusbar_left_padding"
             android:title="@string/statusbar_left_padding"
             android:max="30"
@@ -123,7 +123,7 @@
             settings:units="dp"
             android:defaultValue="3"/>
 
-     <org.aospextended.support.preference.SystemSettingSeekBarPreference
+     <org.arcana.support.preference.SystemSettingSeekBarPreference
             android:key="statusbar_right_padding"
             android:title="@string/statusbar_right_padding"
             android:max="30"
@@ -141,13 +141,13 @@
             android:key="udfps_icon_picker"
             android:title="@string/udfps_icon_picker_title"
             android:summary="@string/udfps_icon_picker_summary"
-            android:fragment="org.aospextended.extensions.fragments.UdfpsIconPicker" />
+            android:fragment="org.arcana.grimoire.fragments.UdfpsIconPicker" />
 
         <Preference
             android:key="udfps_recognizing_animation_preview"
             android:title="@string/udfps_recog_animation_effect_title"
             android:summary="@string/udfps_recog_animation_effect_summary"
-            android:fragment="org.aospextended.extensions.fragments.UdfpsAnimation"/>
+            android:fragment="org.arcana.grimoire.fragments.UdfpsAnimation"/>
 
     </PreferenceCategory>
 

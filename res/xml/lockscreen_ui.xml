@@ -21,25 +21,25 @@
         android:key="lockscreen_ui_finterprint_category"
         android:title="@string/fingerprint_category">
 
-    <org.aospextended.support.preference.SystemSettingSwitchPreference
+    <org.arcana.support.preference.SystemSettingSwitchPreference
         android:key="fingerprint_success_vib"
         android:title="@string/fprint_sucess_vib_title"
         android:summary="@string/fprint_sucess_vib_summary"
         android:persistent="true" />
 
-    <org.aospextended.support.preference.SystemSettingSwitchPreference
+    <org.arcana.support.preference.SystemSettingSwitchPreference
         android:key="fingerprint_error_vib"
         android:title="@string/fprint_error_vib_title"
         android:summary="@string/fprint_error_vib_summary"
         android:persistent="true" />
 
-    <org.aospextended.support.preference.SystemSettingSwitchPreference
+    <org.arcana.support.preference.SystemSettingSwitchPreference
         android:key="udfps_haptic_feedback"
         android:title="@string/udfps_haptic_feedback_title"
         android:summary="@string/udfps_haptic_feedback_summary"
         android:defaultValue="true" />
 
-    <org.aospextended.support.preference.SystemSettingSwitchPreference
+    <org.arcana.support.preference.SystemSettingSwitchPreference
         android:key="enable_ripple_effect"
         android:title="@string/enable_fingerprint_ripple_effect_title"
         android:summary="@string/enable_fingerprint_ripple_effect_summary"
@@ -51,13 +51,13 @@
         android:key="lockscreen_ui_general_category"
         android:title="@string/general_category">
 
-    <org.aospextended.support.preference.SystemSettingSwitchPreference
+    <org.arcana.support.preference.SystemSettingSwitchPreference
         android:key="lockscreen_battery_info"
         android:title="@string/lockscreen_battery_info_title"
         android:summary="@string/lockscreen_battery_info_summary"
         android:defaultValue="true" />
                     
-    <org.aospextended.support.preference.SystemSettingListPreference
+    <org.arcana.support.preference.SystemSettingListPreference
         android:key="screen_off_animation"
         android:title="@string/screen_off_animation_title"
         android:entries="@array/screen_off_animation_entries"
@@ -68,7 +68,7 @@
         <Preference
             android:key="always_on_display_schedule"
             android:title="@string/always_on_display_schedule_title"
-            android:fragment="org.aospextended.extensions.fragments.AODSchedule" />
+            android:fragment="org.arcana.grimoire.fragments.AODSchedule" />
 
     </PreferenceCategory>
 
@@ -76,13 +76,13 @@
         android:key="lockscreen_ui_gestures_category"
         android:title="@string/gestures_category">
 
-    <org.aospextended.support.preference.SystemSettingSwitchPreference
+    <org.arcana.support.preference.SystemSettingSwitchPreference
         android:key="double_tap_sleep_lockscreen"
         android:title="@string/double_tap_to_sleep_lockscreen_title"
         android:summary="@string/double_tap_to_sleep_lockscreen_summary"
         android:defaultValue="true" />
 
-    <org.aospextended.support.preference.SecureSettingSwitchPreference
+    <org.arcana.support.preference.SecureSettingSwitchPreference
         android:key="doze_pulse_on_double_tap"
         android:title="@string/double_tap_on_doze_to_wake_title"
         android:summary="@string/double_tap_on_doze_to_wake_summary"
@@ -94,12 +94,12 @@
         android:key="lockscreen_media_art_options"
         android:title="@string/lockscreen_media_art_options_title" >
             
-        <org.aospextended.support.preference.SystemSettingSwitchPreference
+        <org.arcana.support.preference.SystemSettingSwitchPreference
             android:key="show_lockscreen_media_art"
             android:title="@string/show_lockscreen_media_art_title"
             android:defaultValue="true" />
 
-        <org.aospextended.support.preference.SystemSettingSeekBarPreference
+        <org.arcana.support.preference.SystemSettingSeekBarPreference
             android:key="lockscreen_media_blur"
             android:title="@string/lockscreen_media_blur_title"
             android:dependency="show_lockscreen_media_art"
@@ -119,7 +119,7 @@
             android:key="pulse_settings"
             android:title="@string/pulse_settings"
             android:summary="@string/pulse_settings_summary"
-            android:fragment="org.aospextended.extensions.fragments.PulseSettings" />
+            android:fragment="org.arcana.grimoire.fragments.PulseSettings" />
 
     </PreferenceCategory>
 
